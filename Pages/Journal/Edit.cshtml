@@ -1,0 +1,65 @@
+﻿@page
+@model MyScriptureJournal.Pages.Journal.EditModel
+
+@{
+    ViewData["Title"] = "Edit Journal Entry";
+}
+
+<h1>Edit</h1>
+
+<h4>JournalEntry</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="JournalEntry.Id" />
+            <div class="form-group m-1">
+                <label asp-for="JournalEntry.Title" class="control-label"></label>
+                <input asp-for="JournalEntry.Title" class="form-control" />
+                <span asp-validation-for="JournalEntry.Title" class="text-danger"></span>
+            </div>
+            <div class="form-group m-1">
+                <label asp-for="JournalEntry.Content" class="control-label">Journal Entry</label>
+                <textarea asp-for="JournalEntry.Content" class="form-control" rows="6"></textarea>
+                <span asp-validation-for="JournalEntry.Content" class="text-danger"></span>
+            </div>
+            <div class="form-group m-1">
+                <label asp-for="JournalEntry.Date" class="control-label">Journal Date</label>
+                <input asp-for="JournalEntry.Date" type="date" class="form-control" />
+                <span asp-validation-for="JournalEntry.Date" class="text-danger"></span>
+            </div>
+            <div class="form-group m-1">
+                <label asp-for="JournalEntry.ScriptureBook" class="control-label">Book</label>
+                <input asp-for="JournalEntry.ScriptureBook" class="form-control" />
+                <span asp-validation-for="JournalEntry.ScriptureBook" class="text-danger"></span>
+            </div>
+            <div class="form-group m-1">
+                <label asp-for="JournalEntry.ScriptureChapter" class="control-label">Chapter</label>
+                <input asp-for="JournalEntry.ScriptureChapter" class="form-control" />
+                <span asp-validation-for="JournalEntry.ScriptureChapter" class="text-danger"></span>
+            </div>
+            <div class="form-group m-1">
+                <label asp-for="JournalEntry.ScriptureVerse" class="control-label">Verse</label>
+                <input asp-for="JournalEntry.ScriptureVerse" class="form-control" />
+                <span asp-validation-for="JournalEntry.ScriptureVerse" class="text-danger"></span>
+            </div>
+            <div class="form-group m-1">
+                <label asp-for="JournalEntry.OnlineLibraryLink" class="control-label">Scripture Link</label>
+                <input asp-for="JournalEntry.OnlineLibraryLink" class="form-control" />
+                <span asp-validation-for="JournalEntry.OnlineLibraryLink" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

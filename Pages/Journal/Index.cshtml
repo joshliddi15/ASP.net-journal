@@ -1,0 +1,65 @@
+﻿@page
+@model MyScriptureJournal.Pages.Journal.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Table of Contents</h1>
+
+<p>
+    <a asp-page="Create">New Journal Entry</a>
+</p>
+
+<div>
+    <form method="get">
+        <div class="form-row">
+            <div class="col-md-4 m-2">
+                <input type="text" name="bookSearch" class="form-control" placeholder="Search by Book">
+            </div>
+            <div class="col-md-4 m-2">
+                <input type="text" name="keywordSearch" class="form-control" placeholder="Search by Keyword">
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-primary m-1">Search</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<table class="table table-striped table-responsive">
+    <thead>
+        <tr>
+            <th>
+                Title
+            </th>
+            <th>
+                Date
+            </th>
+            <th>
+                Link
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var entry in Model.JournalEntry) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => entry.Title)
+            </td>
+            <td>
+                @String.Format("{0:d MMM yyyy}", entry.Date)
+            </td>
+            <td>
+                <a href="@Html.DisplayFor(modelItem => entry.OnlineLibraryLink)" target="_blank" rel="noopener noreferrer">View Scripture</a>
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@entry.Id">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@entry.Id">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@entry.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

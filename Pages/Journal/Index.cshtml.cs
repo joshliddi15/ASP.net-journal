@@ -46,6 +46,8 @@ namespace MyScriptureJournal.Pages.Journal
                     .Where(entry => entry.Content.Contains(keywordSearch));
             }
 
+
+
             journalQuery = journalQuery.OrderByDescending(entry => entry.Date);
             JournalEntry = await journalQuery.ToListAsync();
         }

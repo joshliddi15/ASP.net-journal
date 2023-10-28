@@ -5,6 +5,54 @@
     ViewData["Title"] = "Index";
 }
 
+@section Scripts {
+    <script>
+
+        var sortColumn = 1;
+        var sortAscending = true;
+        sortTable(1);
+
+        function sortTable(column) {
+            var table, rows, switching, i, x, y, shouldSwitch, dir;
+            table = document.querySelector("table");
+            switching = true;
+
+            if (column === sortColumn) {
+                sortAscending = !sortAscending;
+            } else {
+                sortAscending = true;
+            }
+
+            sortColumn = column;
+            document.getElementById("dateIndicator").innerText = "⇅";
+            document.getElementById("bookIndicator").innerText = "⇅";
+            document.getElementById((column === 1 ? "dateIndicator" : "bookIndicator")).innerText = sortAscending ? " ▲" : " ▼";
+
+            while (switching) {
+                switching = false;
+                rows = table.rows;
+
+                for (i = 1; i < (rows.length - 1); i++) {
+                    shouldSwitch = false;
+
+                    x = rows[i].getElementsByTagName("TD")[column];
+                    y = rows[i + 1].getElementsByTagName("TD")[column];
+
+                    dir = (sortAscending) ? 1 : -1;
+                    if (x.innerText.localeCompare(y.innerText) === dir) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                }
+                if (shouldSwitch) {
+                    rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                    switching = true;
+                }
+            }
+        }
+    </script>
+}
+
 <h1>Table of Contents</h1>
 
 <p>
@@ -30,15 +78,10 @@
 <table class="table table-striped table-responsive">
     <thead>
         <tr>
-            <th>
-                Title
-            </th>
-            <th>
-                Date
-            </th>
-            <th>
-                Link
-            </th>
+            <th class="prevent-select">Title <span id="titleIndicator"></span></th>
+            <th class="prevent-select" onclick="sortTable(1)">Date <span id="dateIndicator"></span></th>
+            <th class="prevent-select" onclick="sortTable(2)">Book <span id="bookIndicator"></span></th>
+            <th class ="prevent-select">Link</th>
             <th></th>
         </tr>
     </thead>
@@ -50,6 +93,9 @@
             </td>
             <td>
                 @String.Format("{0:d MMM yyyy}", entry.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelIttem => entry.ScriptureBook)
             </td>
             <td>
                 <a href="@Html.DisplayFor(modelItem => entry.OnlineLibraryLink)" target="_blank" rel="noopener noreferrer">View Scripture</a>
